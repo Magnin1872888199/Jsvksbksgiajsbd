@@ -1,3 +1,5 @@
+-<!-----Full Lever Beta By Hiru Hub Dev------*
+-<----Code Beta Free-----
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Workspace = game:GetService("Workspace")
