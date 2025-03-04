@@ -1,68 +1,61 @@
--<!-----Full Lever Beta By Hiru Hub Dev------*
--<----Code Beta Free-----
-local Players = game:GetService("Players")
-local Lighting = game:GetService("Lighting")
-local Workspace = game:GetService("Workspace")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local LocalPlayer = Players.LocalPlayer
-function topos(cf)
-    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        LocalPlayer.Character.HumanoidRootPart.CFrame = cf
-    end
-end
-function isFullMoon()
-    local moon = Lighting:GetMoonPhase()
-    return moon == Enum.MoonPhase.Full or moon == Enum.MoonPhase.WaningGibbous
-end
-function findHighestPoint()
-    local mysticIsland = Workspace.Map:FindFirstChild("MysticIsland")
-    if mysticIsland then
-        local highest = nil
-        for _, part in pairs(mysticIsland:GetChildren()) do
-            if part:IsA("BasePart") then
-                if not highest or part.Position.Y > highest.Position.Y then
-                    highest = part
-                end
-            end
-        end
-        return highest
-    end
-    return nil
-end
----[Toggle = Race:AddToggle("Toggle", {Title = "Auto Pull Lever", Default = false})---]
-Toggle:OnChanged(function(Value)
-    getgenv().AutoPullLever = Value
-end)
-spawn(function()
-    while wait() do
-        pcall(function()
-            if getgenv().AutoPullLever then
-                if isFullMoon() then
-                    local mysticIsland = Workspace.Map:FindFirstChild("MysticIsland")
-                    if mysticIsland then
-                        topos(CFrame.new(mysticIsland.Center.Position.X, 500, mysticIsland.Center.Position.Z))
-                        wait(2)
-                        local highestPoint = findHighestPoint()
-                        if highestPoint then
-                            topos(highestPoint.CFrame * CFrame.new(0, 10, 0))
-                        end
-                        wait(2)
-                        local moonDir = Lighting:GetMoonDirection()
-                        local lookAtPos = Workspace.CurrentCamera.CFrame.p + moonDir * 100
-                        Workspace.CurrentCamera.CFrame = CFrame.lookAt(Workspace.CurrentCamera.CFrame.p, lookAtPos)
-                        VirtualInputManager:SendKeyEvent(true, "T", false, game)
-                        wait(0.1)
-                        VirtualInputManager:SendKeyEvent(false, "T", false, game)
-                        wait(2)
-                        for _, v in pairs(mysticIsland:GetChildren()) do
-                            if v:IsA("MeshPart") and v.Material == Enum.Material.Neon then
-                                topos(v.CFrame)
-                                break
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
+
+
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Key = ""
+getgenv().SettingFarm ={
+        ["Hide UI"] = false,
+        ["Reset Teleport"] = {
+            ["Enabled"] = false,
+            ["Delay Reset"] = 3,
+            ["Item Dont Reset"] = {
+                ["Fruit"] = {
+                    ["Enabled"] = true,
+                    ["All Fruit"] = true, 
+                    ["Select Fruit"] = {
+                        ["Enabled"] = false,
+                        ["Fruit"] = {},
+                    },
+                },
+            },
+        },
+        ["White Screen"] = false,
+        ["Lock Fps"] = {
+            ["Enabled"] = false,
+            ["FPS"] = 20,
+        },
+        ["Get Items"] = {
+            ["Saber"] = true,
+            ["Godhuman"] =  true,
+            ["Skull Guitar"] = true,
+            ["Mirror Fractal"] = true,
+            ["Cursed Dual Katana"] = true,
+            ["Upgrade Race V2-V3"] = true,
+            ["Auto Pull Lever"] = true,
+        },
+        ["Select Hop"] = { -- 70% will have it
+            ["Hop Find Rip Indra Get Valkyrie Helm or Get Tushita"] = true, 
+            ["Hop Find Dough King Get Mirror Fractal"] = false,
+            ["Hop Find Raids Castle [CDK]"] = true,
+            ["Hop Find Cake Queen [CDK]"] = true,
+            ["Hop Find Soul Reaper [CDK]"] = true,
+            ["Hop Find Darkbeard [SG]"] = true,
+            ["Hop Find Mirage [ Pull Lever ]"] = true,
+        },
+        ["Buy Haki"] = {
+            ["Enhancement"] = false,
+            ["Skyjump"] = true,
+            ["Flash Step"] = true,
+            ["Observation"] = true,
+        },
+        ["Sniper Fruit Shop"] = {
+            ["Enabled"] = true, -- Auto Buy Fruit in Shop Mirage and Normal
+            ["Fruit"] = {"Leopard-Leopard","Kitsune-Kitsune","Dragon-Dragon","Yeti-Yeti","Gas-Gas"},
+        },
+        ["Lock Fruit"] = {},
+        ["Webhook"] = {
+            ["Enabled"] = false,
+            ["WebhookUrl"] = "",
+        }
+    }
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaCat-kaitunBF.lua"))()
